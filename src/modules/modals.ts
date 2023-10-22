@@ -1,127 +1,126 @@
 const modules = () => {
-	function bindModal({
-		triggerSelector,
-		modalSelector,
-		closeSelector,
-		closeClickOverlay = true
-	}: {
-		triggerSelector: string
-		modalSelector: string
-		closeSelector: string
-		closeClickOverlay?: boolean
-	}) {
-		const triggers: NodeListOf<HTMLElement> =
-			document.querySelectorAll(triggerSelector)
-		const modal: HTMLElement | null = document.querySelector(
-			modalSelector
-		) as HTMLElement
-		const close: HTMLElement | null = document.querySelector(
-			closeSelector
-		) as HTMLElement
-		const windows: NodeListOf<HTMLElement> = document.querySelectorAll(
-			'[data-modal]'
-		) as NodeListOf<HTMLElement>
-		const scroll: number = calcScroll()
+  interface IbindModal {
+    triggerSelector: string;
+    modalSelector: string;
+    closeSelector: string;
+    closeClickOverlay?: boolean;
+  }
 
-		//Функции повтора кода--------------------------------
-		const hideWindow = () => {
-			windows.forEach(window => {
-				window.style.display = 'none'
-			})
-		}
+  function bindModal({
+    triggerSelector,
+    modalSelector,
+    closeSelector,
+    closeClickOverlay = true
+  }: IbindModal) {
+    const triggers: NodeListOf<HTMLElement> =
+      document.querySelectorAll(triggerSelector);
+    const modal: HTMLElement | null = document.querySelector(modalSelector);
+    const close: HTMLElement | null = document.querySelector(closeSelector);
+    const windows: NodeListOf<HTMLElement> =
+      document.querySelectorAll('[data-modal]');
+    const scroll: number = calcScroll();
 
-		const closeModal = () => {
-			;(modal.style.display = 'none'),
-				document.body.classList.remove('modal-open'),
-				(document.body.style.marginRight = `0px`)
-		}
-		//Блок с фунциями повтора кода окончен ------------------------
+    //Функции повтора кода--------------------------------
+    const hideWindow = () => {
+      windows.forEach((window) => {
+        window.style.display = 'none';
+      });
+    };
 
-		triggers.forEach(trigger => {
-			if (trigger) {
-				trigger.addEventListener('click', e => {
-					if (e.target) {
-						e.preventDefault()
-					}
+    const closeModal = () => {
+      if (modal) {
+        (modal.style.display = 'none'),
+          document.body.classList.remove('modal-open'),
+          (document.body.style.marginRight = '0px');
+      }
+    };
+    //Блок с фунциями повтора кода окончен ------------------------
 
-					hideWindow()
+    triggers.forEach((trigger) => {
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          if (e.target) {
+            e.preventDefault();
+          }
 
-					if (modal) {
-						modal.style.display = 'block'
-						document.body.classList.add('modal-open')
-						document.body.style.marginRight = `${scroll}px`
-					}
-				})
-			}
-		})
+          hideWindow();
 
-		close.addEventListener('click', () => {
-			hideWindow()
-			closeModal()
-		})
+          if (modal) {
+            modal.style.display = 'block';
+            document.body.classList.add('modal-open');
+            document.body.style.marginRight = `${scroll}px`;
+          }
+        });
+      }
+    });
 
-		modal.addEventListener('click', e => {
-			if (e.target === modal && closeClickOverlay) {
-				hideWindow()
-				closeModal()
-			}
-		})
+    close?.addEventListener('click', () => {
+      hideWindow();
+      closeModal();
+    });
 
-		window.addEventListener('keydown', e => {
-			if (e.key === 'Escape') {
-				closeModal()
-			}
-		})
-	}
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal && closeClickOverlay) {
+        hideWindow();
+        closeModal();
+      }
+    });
 
-	const showModalByTime = (selector: string, time: number) => {
-		setTimeout(() => {
-			let display = false
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  }
 
-			document.querySelectorAll('[data-modal]').forEach(item => {
-				if (getComputedStyle(item).display !== 'none') {
-					display = true
-				}
-			})
+  const showModalByTime = (selector: string, time: number) => {
+    setTimeout(() => {
+      let display = false;
 
-			if (!display) {
-				const element = document.querySelector(selector)
-				if (element) {
-					;(element as HTMLElement).style.display = 'block'
-					document.body.style.overflow = ''
-				}
-			}
-		}, time)
-	}
+      document.querySelectorAll('[data-modal]').forEach((item) => {
+        if (getComputedStyle(item).display !== 'none') {
+          display = true;
+        }
+      });
 
-	const calcScroll = (): number => {
-		const div = document.createElement('div')
+      if (!display) {
+        const element = document.querySelector(selector);
+        if (element) {
+          (element as HTMLElement).style.display = 'block';
+          document.body.style.overflow = '';
+        }
+      }
+    }, time);
+  };
 
-		div.style.width = '50px'
-		div.style.height = '50px'
-		div.style.overflowY = 'scroll'
-		div.style.visibility = 'hidden'
+  const calcScroll = (): number => {
+    const div = document.createElement('div');
 
-		document.body.appendChild(div)
-		const scrollWidth = div.offsetWidth - div.clientWidth
-		div.remove
+    div.style.width = '50px';
+    div.style.height = '50px';
+    div.style.overflowY = 'scroll';
+    div.style.visibility = 'hidden';
 
-		return scrollWidth
-	}
+    document.body.appendChild(div);
+    const scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove;
 
-	bindModal({
-		triggerSelector: '.button-design',
-		modalSelector: '.popup-design',
-		closeSelector: '.popup-design .popup-close'
-	})
+    return scrollWidth;
+  };
 
-	bindModal({
-		triggerSelector: '.button-consultation',
-		modalSelector: '.popup-consultation',
-		closeSelector: '.popup-consultation .popup-close'
-	})
+  bindModal({
+    triggerSelector: '.button-design',
+    modalSelector: '.popup-design',
+    closeSelector: '.popup-design .popup-close'
+  });
 
-	showModalByTime('.popup-consultation', 1000)
-}
+  bindModal({
+    triggerSelector: '.button-consultation',
+    modalSelector: '.popup-consultation',
+    closeSelector: '.popup-consultation .popup-close'
+  });
 
-export default modules
+  showModalByTime('.popup-consultation', 1000);
+};
+
+export default modules;
