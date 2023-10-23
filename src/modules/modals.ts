@@ -125,21 +125,6 @@ const modules = () => {
     closeSelector: '.popup-design .popup-close'
   });
 
-  const openByScroll = (selector: string) => {
-    window.addEventListener('scroll', () => {
-      if (
-        !btnPressed &&
-        window.scrollY + document.documentElement.clientHeight >=
-          document.documentElement.scrollHeight
-      ) {
-        const element = document.querySelector(selector) as HTMLElement;
-        if (element) {
-          element.click();
-        }
-      }
-    });
-  };
-
   bindModal({
     triggerSelector: '.button-consultation',
     modalSelector: '.popup-consultation',
@@ -153,7 +138,17 @@ const modules = () => {
     destroy: true
   });
 
-  openByScroll('.fixed-gift');
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const element = document.querySelector('.fixed-gift') as HTMLElement;
+        element.click();
+      }
+    });
+  }, {});
+
+  const footerElement = document.querySelector('.footer') as HTMLElement;
+  scrollObserver.observe(footerElement);
 
   showModalByTime('.popup-consultation', 60000);
 };
