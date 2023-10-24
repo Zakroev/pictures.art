@@ -144,7 +144,7 @@ const modules = () => {
         const element = document.querySelector('.fixed-gift') as HTMLElement;
         element.click();
 
-        observer.unobserve(entry.target);
+        observer.disconnect();
       }
     });
   }, {});
