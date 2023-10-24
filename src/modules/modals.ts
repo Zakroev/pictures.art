@@ -138,11 +138,13 @@ const modules = () => {
     destroy: true
   });
 
-  const scrollObserver = new IntersectionObserver((entries) => {
+  const scrollObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const element = document.querySelector('.fixed-gift') as HTMLElement;
         element.click();
+
+        observer.unobserve(entry.target);
       }
     });
   }, {});
