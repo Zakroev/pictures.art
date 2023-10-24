@@ -59,6 +59,7 @@ const modules = () => {
             document.body.classList.add('modal-open');
             document.body.style.marginRight = `${scroll}px`;
           }
+          btnPressed = true;
         });
       }
     });
@@ -85,6 +86,10 @@ const modules = () => {
   const showModalByTime = (selector: string, time: number) => {
     setTimeout(() => {
       let display = false;
+
+      if (btnPressed) {
+        return;
+      }
 
       document.querySelectorAll('[data-modal]').forEach((item) => {
         if (getComputedStyle(item).display !== 'none') {
