@@ -1,4 +1,4 @@
-import { modals, sliders } from '../modules';
+import { modals, sliders, forms } from '../modules';
 import { Isliders } from '../modules/sliders';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -20,4 +20,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   sliders(sliderParams);
   sliders(sliderParams2);
+  forms();
 });
