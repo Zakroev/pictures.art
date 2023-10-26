@@ -73,15 +73,11 @@ const sliders = ({ slides, dir, prev, next }: Isliders) => {
   activateAnimation();
 
   items[0].parentNode?.addEventListener('mouseenter', () => {
-    if (paused) {
-      clearInterval(paused);
-    }
+    clearInterval(paused);
   });
 
   items[0].parentNode?.addEventListener('mouseleave', () => {
-    if (!paused) {
-      activateAnimation();
-    }
+    activateAnimation();
   });
 };
 
