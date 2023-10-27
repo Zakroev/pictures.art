@@ -1,9 +1,9 @@
-// import checkNumInputs from './checkNumInputs';
-
 const formsFunction = () => {
   const forms = document.querySelectorAll('form');
   const inputs = document.querySelectorAll('input');
-  const uploads = document.querySelectorAll('[name="upload]');
+  const uploads: HTMLInputElement[] = Array.from(
+    document.querySelectorAll<HTMLInputElement>('[name="upload"]')
+  );
 
   interface IMessage {
     loading: string;
@@ -19,7 +19,6 @@ const formsFunction = () => {
     question: string;
   }
 
-  //Пути картинок работают только полные
   const message: IMessage = {
     loading: 'Загрузка',
     success: 'Спасибо! Мы с вами свяжемся',
@@ -60,15 +59,20 @@ const formsFunction = () => {
     });
   };
 
-  //ANY?
-  uploads.forEach((upload: any) => {
+  uploads.forEach((upload: HTMLInputElement) => {
     upload.addEventListener('input', () => {
-      const arr = upload.files[0].name.split('.');
-
-      const dots = arr[0].length > 5 ? '...' : '.';
-      const name = arr[0].substring(0, 6) + dots + arr[1];
-
-      upload.previousElementSibling.textContent = name;
+      if (upload.files && upload.files.length > 0) {
+        const [fileName, fileExt] = upload.files[0].name.split('.');
+        const dots = fileName.length > 5 ? '...' : '.';
+        const name = `${fileName.substring(0, 6)}${dots}${fileExt}`;
+        if (upload.previousElementSibling) {
+          upload.previousElementSibling.textContent = name;
+        }
+      } else {
+        if (upload.previousElementSibling) {
+          upload.previousElementSibling.textContent = 'Файл не выбран';
+        }
+      }
     });
   });
 
