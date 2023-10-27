@@ -4,9 +4,11 @@ const checkTextInputs = (selector: string) => {
   );
 
   txtInputs.forEach((input) => {
-    input.addEventListener('keypress', (e) => {
-      if (e.key.match(/[^а-яё 0-9]/gi)) {
-        e.preventDefault;
+    input.addEventListener('input', () => {
+      const inputValue = input.value;
+      const validValue = inputValue.replace(/[^а-яё 0-9]/gi, '');
+      if (inputValue !== validValue) {
+        input.value = validValue;
       }
     });
   });
