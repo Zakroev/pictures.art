@@ -3,10 +3,9 @@
 const formsFunction = () => {
   const forms = document.querySelectorAll('form');
   const inputs = document.querySelectorAll('input');
+  const uploads = document.querySelectorAll('[name="upload]');
 
-  // checkNumInputs('input[name = "user_phone"]');
-
-  interface Imessage {
+  interface IMessage {
     loading: string;
     success: string;
     failure: string;
@@ -15,28 +14,33 @@ const formsFunction = () => {
     fail: string;
   }
 
-  interface Ipath {
+  interface IPath {
     designer: string;
     question: string;
   }
 
-  //Исправить пути картинок
-  const message: Imessage = {
+  //Пути картинок работают только полные
+  const message: IMessage = {
     loading: 'Загрузка',
     success: 'Спасибо! Мы с вами свяжемся',
     failure: 'Что-то пошло не так',
-    spinner: 'assets/img/loading-loading-forever.gif',
+    spinner: 'src/assets/img/loading-loading-forever.gif',
     ok: 'src/assets/img/cute-ok.gif',
-    fail: 'assets/img/mimochai-cute.gif'
+    fail: 'src/assets/img/mimochai-cute.gif'
   };
 
-  //Дописать тут
-  const path: Ipath = {
-    designer: 'assets/server',
-    question: 'http://localhost:3000'
+  const path: IPath = {
+    designer: 'http://localhost:3000/api/data',
+    question: 'http://localhost:3000/api/data'
   };
 
-  const postData = async (url: string, data: string) => {
+  const postData: (
+    url: string,
+    data: { [key: string]: string }
+  ) => Promise<string> = async (
+    url: string,
+    data: { [key: string]: string }
+  ) => {
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -49,7 +53,24 @@ const formsFunction = () => {
     inputs.forEach((input) => {
       input.value = '';
     });
+    uploads.forEach((upload) => {
+      if (upload.previousElementSibling) {
+        upload.previousElementSibling.textContent = 'Файл не выбран';
+      }
+    });
   };
+
+  //ANY?
+  uploads.forEach((upload: any) => {
+    upload.addEventListener('input', () => {
+      const arr = upload.files[0].name.split('.');
+
+      const dots = arr[0].length > 5 ? '...' : '.';
+      const name = arr[0].substring(0, 6) + dots + arr[1];
+
+      upload.previousElementSibling.textContent = name;
+    });
+  });
 
   forms.forEach((form) => {
     form.addEventListener('submit', (e) => {
@@ -66,7 +87,7 @@ const formsFunction = () => {
 
       const statusImg = document.createElement('img');
       statusImg.setAttribute('src', message.spinner);
-      statusImg.classList.add('animated', 'fadeInUp');
+      statusImg.classList.add('animated', 'fadeInUp', 'popup_img');
       statusMessage.appendChild(statusImg);
 
       const textMessage = document.createElement('div');
@@ -75,10 +96,10 @@ const formsFunction = () => {
 
       const formData = new FormData(form);
       const formDataObj: { [key: string]: string } = {};
-      let api;
-      form.closest('.popup-design')
-        ? (api = path.designer)
-        : (api = path.question);
+      const url: string =
+        form.closest('.popup-design') || form.classList.contains('calc_form')
+          ? path.designer
+          : path.question;
 
       formData.forEach((value, key) => (formDataObj[key] = value.toString()));
 
@@ -88,7 +109,7 @@ const formsFunction = () => {
         formData.append(input.name, input.value);
       });
 
-      postData('http://localhost:3000', formDataObj)
+      postData(url, formDataObj)
         .then((res) => {
           console.log(res);
           statusImg.setAttribute('src', message.ok);
@@ -104,6 +125,9 @@ const formsFunction = () => {
           clearInputs();
           setTimeout(() => {
             statusMessage.remove();
+            form.style.display = 'block';
+            form.classList.remove('fadeOutUp');
+            form.classList.remove('fadeInUp');
           }, 5000);
         });
     });
