@@ -4,8 +4,15 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
   const button = document.querySelector(trigger);
 
   function clickHandler() {
-    getResource('src/assets/db.json')
-      .then((res: any) => createCards(res))
+    getResource('/db.json')
+      .then((res: any) => {
+        if (res.styles && Array.isArray(res.styles)) {
+          createCards(res.styles);
+        } else {
+          console.error("Invalid data format: 'styles' is not an array");
+        }
+      })
+
       .catch((error: any) => console.log(error));
 
     button?.remove();
@@ -15,7 +22,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
     button.addEventListener('click', clickHandler.bind(button));
   }
 
-  const createCards = (responses: any) => {
+  const createCards = (responses: any[]) => {
     responses.forEach((response: any) => {
       const card = document.createElement('div');
 
