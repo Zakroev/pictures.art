@@ -4,7 +4,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
   const button = document.querySelector(trigger);
 
   function clickHandler() {
-    getResource('/db.json')
+    getResource('src/assets/db.json')
       .then((res: any) => createCards(res))
       .catch((error: any) => console.log(error));
 
