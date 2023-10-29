@@ -30,7 +30,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
 
       card.innerHTML = `
       <div class="styles-block">
-          <img src=src/${response.src} alt=style>
+          <img src=${response.src} alt=style>
           <h4>${response.title}</h4>
           <a href=${response.link}>Подробнее</a>
       </div>
