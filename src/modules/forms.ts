@@ -35,21 +35,6 @@ const formsFunction = () => {
     question: 'http://localhost:3000/api/data'
   };
 
-  // const postData: (
-  //   url: string,
-  //   data: { [key: string]: string }
-  // ) => Promise<string> = async (
-  //   url: string,
-  //   data: { [key: string]: string }
-  // ) => {
-  //   const res = await fetch(url, {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(data)
-  //   });
-  //   return await res.text();
-  // };
-
   const clearInputs = () => {
     inputs.forEach((input) => {
       input.value = '';
