@@ -1,19 +1,27 @@
 import { getResource } from '../js/services/requests';
 
+export interface IStylesData {
+  styles: {
+    src: string;
+    title: string;
+    link: string;
+  }[];
+}
+
 const showMoreStyles = (trigger: string, wrapper: string) => {
   const button = document.querySelector(trigger);
 
   function clickHandler() {
     getResource('/db.json')
-      .then((res: any) => {
-        if (res.styles && Array.isArray(res.styles)) {
+      .then((res: IStylesData) => {
+        if (Array.isArray(res.styles)) {
           createCards(res.styles);
         } else {
           console.error("Invalid data format: 'styles' is not an array");
         }
       })
 
-      .catch((error: any) => console.log(error));
+      .catch((error: Error) => console.log(error));
 
     button?.remove();
   }
@@ -22,7 +30,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
     button.addEventListener('click', clickHandler.bind(button));
   }
 
-  const createCards = (responses: any[]) => {
+  const createCards = (responses: IStylesData['styles']) => {
     responses.forEach((response: any) => {
       const card = document.createElement('div');
 

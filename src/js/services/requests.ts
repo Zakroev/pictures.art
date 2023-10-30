@@ -1,7 +1,9 @@
-const postData: (
+import { IStylesData } from "../../modules/showMoreStyles";
+
+export const postData = async (
   url: string,
   data: { [key: string]: string }
-) => Promise<string> = async (url: string, data: { [key: string]: string }) => {
+) => {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -10,7 +12,9 @@ const postData: (
   return await res.text();
 };
 
-const getResource: (url: string) => Promise<string> = async (url: string) => {
+export const getResource: (url: string) => Promise<IStylesData> = async (
+  url: string
+) => {
   const res = await fetch(url);
 
   if (!res.ok) {
@@ -19,5 +23,3 @@ const getResource: (url: string) => Promise<string> = async (url: string) => {
 
   return await res.json();
 };
-
-export { postData, getResource };
