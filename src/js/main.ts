@@ -1,4 +1,11 @@
-import { modals, sliders, forms, mask, checkTextInputs } from '../modules';
+import {
+  modals,
+  sliders,
+  forms,
+  mask,
+  checkTextInputs,
+  showMoreStyles
+} from '../modules';
 import { Isliders } from '../modules/sliders';
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -24,4 +31,5 @@ window.addEventListener('DOMContentLoaded', () => {
   mask('[name="phone"]');
   checkTextInputs('[name = "name"]');
   checkTextInputs('[name = "message"]');
+  showMoreStyles('.button-styles', '#styles .row');
 });
