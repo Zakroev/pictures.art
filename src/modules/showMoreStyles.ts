@@ -1,6 +1,6 @@
 import { getResource } from '../js/services/requests';
 
-export interface IStylesData {
+export interface IResourse {
   styles: {
     src: string;
     title: string;
@@ -13,7 +13,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
 
   function clickHandler() {
     getResource('/db.json')
-      .then((res: IStylesData) => {
+      .then((res: IResourse) => {
         if (Array.isArray(res.styles)) {
           createCards(res.styles);
         } else {
@@ -30,7 +30,7 @@ const showMoreStyles = (trigger: string, wrapper: string) => {
     button.addEventListener('click', clickHandler.bind(button));
   }
 
-  const createCards = (responses: IStylesData['styles']) => {
+  const createCards = (responses: IResourse['styles']) => {
     responses.forEach((response: any) => {
       const card = document.createElement('div');
 

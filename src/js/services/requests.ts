@@ -1,4 +1,4 @@
-import { IStylesData } from "../../modules/showMoreStyles";
+import { IResourse } from '../../modules/showMoreStyles';
 
 export const postData = async (
   url: string,
@@ -12,7 +12,7 @@ export const postData = async (
   return await res.text();
 };
 
-export const getResource: (url: string) => Promise<IStylesData> = async (
+export const getResource: (url: string) => Promise<IResourse> = async (
   url: string
 ) => {
   const res = await fetch(url);
