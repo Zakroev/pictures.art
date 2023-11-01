@@ -46,32 +46,20 @@ const filter = () => {
     }
   };
 
-  btnAll?.addEventListener('click', () => {
-    typeFilter(marksAll);
-  });
+  const buttonParamPairs = [
+    { element: btnAll, param: marksAll },
+    { element: btnLovers, param: markLovers },
+    { element: btnChef, param: markChef },
+    { element: btnGuy, param: btnGuy },
+    { element: btnGirl, param: markGirl },
+    { element: btnGrandmother, param: null },
+    { element: btnGranddad, param: null }
+  ];
 
-  btnLovers?.addEventListener('click', () => {
-    typeFilter(markLovers);
-  });
-
-  btnChef?.addEventListener('click', () => {
-    typeFilter(markChef);
-  });
-
-  btnGuy?.addEventListener('click', () => {
-    typeFilter(markGuy);
-  });
-
-  btnGirl?.addEventListener('click', () => {
-    typeFilter(markGirl);
-  });
-
-  btnGrandmother?.addEventListener('click', () => {
-    typeFilter(null);
-  });
-
-  btnGranddad?.addEventListener('click', () => {
-    typeFilter(null);
+  buttonParamPairs.forEach(({ element, param }) => {
+    element?.addEventListener('click', () =>
+      typeFilter(param as NodeListOf<HTMLElement> | null)
+    );
   });
 
   menu?.addEventListener('click', (e) => {
