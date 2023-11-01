@@ -50,16 +50,16 @@ const filter = () => {
     { element: btnAll, param: marksAll },
     { element: btnLovers, param: markLovers },
     { element: btnChef, param: markChef },
-    { element: btnGuy, param: btnGuy },
+    { element: btnGuy, param: markGuy },
     { element: btnGirl, param: markGirl },
     { element: btnGrandmother, param: null },
     { element: btnGranddad, param: null }
   ];
 
   buttonParamPairs.forEach(({ element, param }) => {
-    element?.addEventListener('click', () =>
-      typeFilter(param as NodeListOf<HTMLElement> | null)
-    );
+    if (element) {
+      element.addEventListener('click', () => typeFilter(param));
+    }
   });
 
   menu?.addEventListener('click', (e) => {
