@@ -6,3 +6,4 @@ export { default as checkTextInputs } from './checkTextInputs';
 export { default as showMoreStyles } from './showMoreStyles';
 export { default as calc } from './calc';
 export { default as ICalculator } from './calc';
+export { default as filter } from './filter';
