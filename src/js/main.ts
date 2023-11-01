@@ -4,7 +4,8 @@ import {
   forms,
   mask,
   checkTextInputs,
-  showMoreStyles
+  showMoreStyles,
+  calc
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
@@ -32,4 +33,11 @@ window.addEventListener('DOMContentLoaded', () => {
   checkTextInputs('[name = "name"]');
   checkTextInputs('[name = "message"]');
   showMoreStyles('.button-styles', '#styles .row');
+  calc({
+    size: '#size',
+    material: '#material',
+    options: '#options',
+    promocode: '.promocode',
+    result: '.calc-price'
+  });
 });
