@@ -5,7 +5,8 @@ import {
   mask,
   checkTextInputs,
   showMoreStyles,
-  calc
+  calc,
+  filter
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
@@ -40,4 +41,5 @@ window.addEventListener('DOMContentLoaded', () => {
     promocode: '.promocode',
     result: '.calc-price'
   });
+  filter();
 });
