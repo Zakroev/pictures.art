@@ -3,6 +3,7 @@ const picturesSize = (imgSelector: string) => {
 
   const showImg = (block: HTMLElement, imgPath: string) => {
     const img = block.querySelector('img') as HTMLImageElement;
+    img.dataset.originalSrc = img.src;
     img.src = imgPath;
     Array.from(block.querySelectorAll('p:not(.sizes-hit)')).forEach((p) => {
       const element = p as HTMLElement;
@@ -10,9 +11,9 @@ const picturesSize = (imgSelector: string) => {
     });
   };
 
-  const hideImg = (block: HTMLElement, imgPath: string) => {
+  const hideImg = (block: HTMLElement) => {
     const img = block.querySelector('img') as HTMLImageElement;
-    img.src = imgPath;
+    img.src = img.dataset.originalSrc || '';
     Array.from(block.querySelectorAll('p:not(.sizes-hit)')).forEach((p) => {
       const element = p as HTMLElement;
       element.style.display = 'block';
@@ -26,7 +27,7 @@ const picturesSize = (imgSelector: string) => {
       showImg(block as HTMLElement, imgPath);
     });
     block.addEventListener('mouseout', () => {
-      hideImg(block as HTMLElement, imgPath);
+      hideImg(block as HTMLElement);
     });
   });
 };
