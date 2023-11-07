@@ -810,6 +810,32 @@ h4 {
   font-size: 1.7rem;
   text-align: center;
 }
+
+.change-photos {
+  width: 200px;
+}
+.change-photos .change-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.change-photos .change-photo-small img {
+  filter: blur(10px);
+}
+
+.change-photos .change-photo:nth-of-type(2) {
+  display: none;
+}
+
+.change-photos:hover .change-photo:nth-of-type(1) {
+  display: none;
+}
+
+.change-photos:hover .change-photo:nth-of-type(2) {
+  display: block;
+}
+
 .card-2 {
   margin-bottom: 4rem;
 }
