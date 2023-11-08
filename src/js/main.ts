@@ -6,7 +6,8 @@ import {
   checkTextInputs,
   showMoreStyles,
   calc,
-  filter
+  filter,
+  picturesSize
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
@@ -42,4 +43,5 @@ window.addEventListener('DOMContentLoaded', () => {
     result: '.calc-price'
   });
   filter();
+  picturesSize('.sizes-block');
 });
