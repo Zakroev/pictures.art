@@ -16,22 +16,6 @@ const accordion = (triggerSelector: string) => {
       }
     });
   });
-  // const blocks = document.querySelectorAll(itemsSelector);
-
-  // blocks.forEach((block) => {
-  //   block.classList.add('animated', 'fadeInDown');
-  // });
-
-  // buttons.forEach((button) => {
-  //   button.addEventListener('click', function (this: HTMLElement) {
-  //     if (!this.classList.contains('active')) {
-  //       buttons.forEach((button) => {
-  //         button.classList.remove('active', 'active-style');
-  //       });
-  //       this.classList.add('active', 'active-style');
-  //     }
-  //   });
-  // });
 };
 
 export default accordion;
