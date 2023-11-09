@@ -963,6 +963,20 @@ h4 {
 .often-questions .ui-accordion-content-active {
   margin-bottom: 4rem;
 }
+
+.dropdown {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease-in-out;
+}
+.dropdown[data-open='true'] {
+  grid-template-rows: 1fr;
+}
+
+.dropdownContent {
+  overflow: hidden;
+}
+
 .often-questions .brushes {
   position: absolute;
   bottom: 0;
