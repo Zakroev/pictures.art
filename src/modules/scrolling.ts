@@ -10,40 +10,21 @@ const scrolling = (upSelector: string) => {
       upElem?.classList.remove('fadeIn');
     }
   });
-  let links = document.querySelectorAll('[href^="#"]');
-  let speed = 0.2;
+
+  const links = document.querySelectorAll('[href^="#"]');
 
   links.forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
 
-      let widthTop = document.documentElement.scrollTop;
-      let hash = (link as HTMLAnchorElement).hash;
-      let toBlock = (
-        document.querySelector(hash) as HTMLElement
-      )?.getBoundingClientRect().top;
-      let start: number | null = null;
+      const hash = (link as HTMLAnchorElement).hash;
+      const targetElement = document.querySelector(hash) as HTMLElement;
 
-      requestAnimationFrame(step);
-
-      function step(time: number) {
-        if (start === null) {
-          start = time;
-        }
-
-        let progress = time - start;
-        let r =
-          toBlock < 0
-            ? Math.max(widthTop - progress / speed, widthTop + toBlock)
-            : Math.min(widthTop + progress / speed, widthTop + toBlock);
-
-        document.documentElement.scrollTo(0, r);
-
-        if (r !== widthTop + toBlock) {
-          requestAnimationFrame(step);
-        } else {
-          location.hash = hash;
-        }
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
       }
     });
   });
