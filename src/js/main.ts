@@ -7,7 +7,8 @@ import {
   showMoreStyles,
   calc,
   filter,
-  picturesSize
+  picturesSize,
+  scrolling
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
@@ -44,4 +45,5 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   filter();
   picturesSize('.sizes-block');
+  scrolling('.pageup');
 });
