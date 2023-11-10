@@ -1,58 +1,84 @@
 const drop = () => {
-  const fileInputs = document.querySelectorAll('[name="upload"]');
-  const events = ['dragenter', 'dragleave', 'dragover', 'drop'];
-  const event1 = ['dragenter', 'dragover'];
-  const events2 = ['dragleave', 'drop'];
+  const fileInputs =
+    document.querySelectorAll<HTMLInputElement>('[name="upload"]');
+  const dragEvents = ['dragenter', 'dragleave', 'dragover', 'drop'];
+  const highlightEvents = ['dragenter', 'dragover'];
+  const unhighlightEvents = ['dragleave', 'drop'];
 
-  const preventDefaults = (e: any) => {
+  const preventDefaults = (e: Event) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  events.forEach((event) => {
+  dragEvents.forEach((event) => {
     fileInputs.forEach((input) => {
       input.addEventListener(event, preventDefaults, false);
     });
   });
 
-  const highlight = (item: any) => {
-    item.closest('.file_upload').style.border = '5px solid yellow';
-    item.closest('.file_upload').style.background = 'rgba(0,0,0, .7)';
-  };
-
-  const unhighlight = (item: any) => {
-    item.closest('.file_upload').style.border = 'none';
-    if (item.closest('.calc_form')) {
-      item.closest('.file_upload').style.background = '#fff';
-    } else {
-      item.closest('.file_upload').style.background = '#ededed';
+  const highlight = (item: HTMLElement) => {
+    const fileUpload = item.closest('.file_upload') as HTMLElement;
+    if (fileUpload) {
+      fileUpload.style.border = '5px solid yellow';
+      fileUpload.style.background = 'rgba(0,0,0, .7)';
     }
   };
 
-  event1.forEach((event) => {
+  const unhighlight = (item: HTMLElement) => {
+    const fileUpload = item.closest('.file_upload') as HTMLElement;
+
+    if (fileUpload) {
+      fileUpload.style.border = 'none';
+
+      if (item.closest('.calc_form')) {
+        fileUpload.style.background = '#fff';
+      } else {
+        fileUpload.style.background = '#ededed';
+      }
+    }
+  };
+
+  highlightEvents.forEach((event) => {
     fileInputs.forEach((input) => {
-      input.addEventListener(event, () => highlight(input), false);
+      input.addEventListener(
+        event,
+        () => {
+          highlight(input);
+        },
+        false
+      );
     });
   });
 
-  events2.forEach((event) => {
+  unhighlightEvents.forEach((event) => {
     fileInputs.forEach((input) => {
-      input.addEventListener(event, () => unhighlight(input), false);
+      input.addEventListener(
+        event,
+        () => {
+          unhighlight(input);
+        },
+        false
+      );
     });
   });
 
-  // fileInputs.forEach((input) => {
-  //   input.addEventListener('drop', (e) => {
-  //     input.files = e.dataTransfer.files;
+  fileInputs.forEach((input) => {
+    input.addEventListener('drop', (e) => {
+      preventDefaults(e);
+      unhighlight(input);
 
-  //     let dots;
-  //     const arr = input.files[0].name.split('.');
-
-  //     arr[0].length > 6 ? (dots = '...') : (dots = '.');
-  //     const name = arr[0].substring(0, 6) + dots + arr[1];
-  //     input.previousElementSibling?.textContent = name;
-  //   });
-  // });
+      const dataTransfer = e.dataTransfer;
+      if (dataTransfer && dataTransfer.files.length > 0) {
+        const files = dataTransfer.files;
+        const [fileName, fileExt] = files[0].name.split('.');
+        const dots = fileName.length > 5 ? '...' : '.';
+        const name = `${fileName.substring(0, 6)}${dots}${fileExt}`;
+        if (input.previousElementSibling) {
+          input.previousElementSibling.textContent = name;
+        }
+      }
+    });
+  });
 };
 
 export default drop;
