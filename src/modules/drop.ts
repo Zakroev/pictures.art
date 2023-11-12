@@ -11,16 +11,16 @@ const drop = () => {
   };
 
   dragEvents.forEach((event) => {
-    fileInputs.forEach((input) => {
-      input.addEventListener(event, preventDefaults, false);
-    });
+    fileInputs.forEach((input) =>
+      input.addEventListener(event, preventDefaults, false)
+    );
   });
 
   const highlight = (item: HTMLElement) => {
     const fileUpload = item.closest('.file_upload') as HTMLElement;
     if (fileUpload) {
-      fileUpload.style.border = '5px solid yellow';
-      fileUpload.style.background = 'rgba(0,0,0, .7)';
+      (fileUpload.style.border = '5px solid yellow'),
+        (fileUpload.style.background = 'rgba(0,0,0, .7)');
     }
   };
 
@@ -29,37 +29,22 @@ const drop = () => {
 
     if (fileUpload) {
       fileUpload.style.border = 'none';
-
-      if (item.closest('.calc_form')) {
-        fileUpload.style.background = '#fff';
-      } else {
-        fileUpload.style.background = '#ededed';
-      }
+      fileUpload.style.background = item.closest('.calc_form')
+        ? '#fff'
+        : '#ededed';
     }
   };
 
   highlightEvents.forEach((event) => {
-    fileInputs.forEach((input) => {
-      input.addEventListener(
-        event,
-        () => {
-          highlight(input);
-        },
-        false
-      );
-    });
+    fileInputs.forEach((input) =>
+      input.addEventListener(event, () => highlight(input), false)
+    );
   });
 
   unhighlightEvents.forEach((event) => {
-    fileInputs.forEach((input) => {
-      input.addEventListener(
-        event,
-        () => {
-          unhighlight(input);
-        },
-        false
-      );
-    });
+    fileInputs.forEach((input) =>
+      input.addEventListener(event, () => unhighlight(input), false)
+    );
   });
 
   fileInputs.forEach((input) => {
@@ -69,8 +54,7 @@ const drop = () => {
 
       const dataTransfer = e.dataTransfer;
       if (dataTransfer && dataTransfer.files.length > 0) {
-        const files = dataTransfer.files;
-        const [fileName, fileExt] = files[0].name.split('.');
+        const [fileName, fileExt] = dataTransfer.files[0].name.split('.');
         const dots = fileName.length > 5 ? '...' : '.';
         const name = `${fileName.substring(0, 6)}${dots}${fileExt}`;
         if (input.previousElementSibling) {
