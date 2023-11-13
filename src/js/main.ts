@@ -8,7 +8,8 @@ import {
   calc,
   filter,
   picturesSize,
-  scrolling, burger
+  scrolling, 
+  burger
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
