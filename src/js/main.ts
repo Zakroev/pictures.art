@@ -8,7 +8,7 @@ import {
   calc,
   filter,
   picturesSize,
-  scrolling
+  scrolling, burger
 } from '../modules';
 import { Isliders } from '../modules/sliders';
 
@@ -46,4 +46,5 @@ window.addEventListener('DOMContentLoaded', () => {
   filter();
   picturesSize('.sizes-block');
   scrolling('.pageup');
+  burger('.burger-menu', '.burger');
 });
