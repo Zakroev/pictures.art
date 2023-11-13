@@ -8,4 +8,4 @@ export { default as calc } from './calc';
 export { default as ICalculator } from './calc';
 export { default as filter } from './filter';
 export { default as picturesSize } from './picturesSize';
-export { default as scrolling } from './scrolling';
+export { default as drop } from './drop';
